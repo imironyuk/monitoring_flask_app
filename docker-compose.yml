@@ -10,8 +10,8 @@ services:
    ports:
      - 3000:3000
    volumes:
+     - ./grafana:/etc/grafana/provisioning:ro
      - ./grafana:/var/lib/grafana
-     - ./grafana/provisioning/:/etc/grafana/provisioning/
    restart: unless-stopped
  app:
    build: ./my_flask_app/.
