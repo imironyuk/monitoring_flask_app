@@ -1,37 +1,23 @@
-version: "3"  
 services:  
  prometheus:
-      image: prom/prometheus:latest
-      ports:
-      - 9090:9090
-      volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-      container_name: prometheus
-      networks:
-      - default
+   image: prom/prometheus:latest
+   ports:
+     - 9090:9090
+   volumes:
+     - "./prometheus.yml:/etc/prometheus/prometheus.yml"
  grafana:
-    image: grafana/grafana
-    user: root
-    depends_on:
-      - prometheus
-    ports:
-      - 3000:3000
-    volumes:
-      - ./grafana:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-    container_name: grafana
-    hostname: grafana
-    restart: unless-stopped
-    environment:
-      TZ: "Europe/Moscow"
-    networks:
-      - default
+   image: grafana/grafana
+   depends_on:
+     - prometheus
+   ports:
+     - 3000:3000
+   volumes:
+     - ./grafana:/var/lib/grafana
+     - ./grafana/provisioning/:/etc/grafana/provisioning/
+   restart: unless-stopped
  app:
-      container_name: app
-      build: ./my_flask_app/.
-      ports:
-      - "5000:5000"
-      volumes:
-      - "./my_flask_app/app.py:/app.py"
-      networks:
-      - default
+   build: ./my_flask_app/.
+   ports:
+     - 5000:5000
+   volumes:
+     - "./my_flask_app/app.py:/app.py"
