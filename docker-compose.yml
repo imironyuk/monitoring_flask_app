@@ -1,4 +1,4 @@
-services:  
+services:
  prometheus:
    image: prom/prometheus:latest
    ports:
@@ -12,6 +12,7 @@ services:
    volumes:
      - ./grafana:/etc/grafana/provisioning:ro
    restart: unless-stopped
+
  app:
    build: ./my_flask_app/.
    ports:
